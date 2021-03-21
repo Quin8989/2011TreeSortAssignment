@@ -1,0 +1,48 @@
+AVL Deletion Algorithm:
+=======================
+
+Given an AVL tree and a key value k to be deleted.
+Here balance of a node is defined to be
+the height of its left subtree minus the height of its right subtree.
+Also, we assume that the only content stored in a node is its key value.
+
+1. Perform a deletion of the item from the AVL-tree as a BST deletion.
+   Let w be the node containing the key value k.
+   Case 1: the two children of w are external:  delete the node w
+
+   Case 2: one of the child of w is external:
+           Let c be the child of w, which is an internal node.
+           The height-balance property at w implies that both children
+           of c must be external.
+
+           Overwrite the key value (k) of w by the key value in node c.
+           Delete the node c (both children of c are again external).
+
+   Case 3: both children of w are internal:
+           Let s be the inorder successor node of w.
+           Overwrite the key value (k) of w by the key value in node s.
+
+           Delete the node s (whose left child must be internal).
+           This is then reduced to either case 1 or case 2.
+
+   Therefore in all three cases, the actual node deleted from the
+   AVL tree structure is one whose children are both external nodes.
+   Let this node be x.
+
+2. Retrace the path up the tree from x to the root
+   (use the parent information if it is stored;
+    otherwise a stack can be used to keep track of the nodes
+    visited down the tree during the insertion step)
+
+       let z be the next node on the path
+       recompute the balance factor and the height of node z
+
+       if ( new balance factor of z is -2 or +2 )
+            rebalance the tree at z using single/double rotations
+            and update the height
+
+       if there is no change in the height of current subtree
+            break; (exit)
+
+   until z is the root
+

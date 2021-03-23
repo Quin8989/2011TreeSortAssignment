@@ -17,6 +17,8 @@ public interface Tree <E> {
 	 * @param c Collection containing the elements
 	 * @return true if the tree was changed as a result of the call
 	 */
+	
+	
 	public boolean addAll (Collection<? extends E> c);
 
 	/**

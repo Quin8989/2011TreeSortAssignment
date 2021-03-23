@@ -71,13 +71,8 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
             }
             x.item=temp.item;
           
-            System.out.println(x.item);
-            System.out.println(" ");
             temp = null;
-           // Node t = x;
-           // x = min(t.right);
-          //  x.right = deleteMin(t.right);
-           // x.left = t.left;
+            x.left = null;
         } 
         x.size = size(x.left) + size(x.right) + 1;
         return x;
@@ -93,8 +88,17 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 
 	@Override
 	public boolean contains(Object o) {
-		// TODO Auto-generated method stub
-		return false;
+		Node x= root;
+		int cmp;
+		while(true) {
+			if(x == null) return false;
+			cmp = ((Comparable<? super E>) o).compareTo(x.item);
+			if (cmp < 0) x = x.left;
+			else if (cmp > 0) x = x.right;
+			else return true;
+		}
+		
+		
 	}
 
 	@Override
@@ -118,7 +122,6 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 
 		@Override
 		public boolean hasNext() {
-			// TODO Auto-generated method stub
 			return next != null;
 		}
 
@@ -161,7 +164,6 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
 		return size(root);
 	}
 
@@ -195,6 +197,10 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 			Integer item = iterator.next();
 			System.out.println(item);
 		}
+		
+		System.out.println(tree.size());
+		System.out.println(" ");
+		System.out.println(tree.contains(13));
 		
 
 	}

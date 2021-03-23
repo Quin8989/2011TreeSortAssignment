@@ -18,9 +18,6 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 		}
 	}
 
-	public A3BSTree() {
-		// TODO Auto-generated method stub
-	}
 
 	@Override
 	public boolean add(E item) {
@@ -50,12 +47,49 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
 
 	@Override
 	public boolean remove(Object o) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		if (o == null) throw new IllegalArgumentException("calls delete() with a null key");
+        root = delete(root, o);
+		return true;
+    }
+
+    private Node delete(Node x, Object o) {
+        if (x == null) return null;
+
+        int cmp = ((Comparable<? super E>) o).compareTo(x.item);
+        if      (cmp < 0) x.left  = delete(x.left,  o);
+        else if (cmp > 0) x.right = delete(x.right, o);
+        else { 
+            if (x.right == null) return x.left;
+            if (x.left  == null) return x.right;
+            Node temp = x;
+            while(temp.left != null) {
+            	temp = temp.left;
+            }
+            x.item=temp.item;
+          
+            System.out.println(x.item);
+            System.out.println(" ");
+            temp = null;
+           // Node t = x;
+           // x = min(t.right);
+          //  x.right = deleteMin(t.right);
+           // x.left = t.left;
+        } 
+        x.size = size(x.left) + size(x.right) + 1;
+        return x;
+    } 
+	    /**
+	     * Returns true if this symbol table is empty.
+	     * @return {@code true} if this symbol table is empty; {@code false} otherwise
+	     */
+	    public boolean isEmpty() {
+	        return size() == 0;
+	    }
+	
 
 	@Override
 	public boolean contains(Object o) {
@@ -143,20 +177,25 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 		Tree<Integer> tree = new A3BSTree<>();
 
 		tree.add(3);
-		tree.add(5);
-		tree.add(1);
-		tree.add(4);
 		tree.add(2);
-		tree.add(7);
-		tree.add(23);
-		tree.add(0);
-		tree.add(69);
+		tree.add(10);
+		tree.add(13);
+		tree.add(206);
+		tree.add(12);
+		tree.add(11);
+		tree.add(1000);
+		tree.add(1001);
+		tree.add(205);
+		
+		tree.remove(206);
+		
 
 		Iterator<Integer> iterator = tree.iterator();
 		while (iterator.hasNext()) {
 			Integer item = iterator.next();
 			System.out.println(item);
 		}
+		
 
 	}
 

@@ -14,7 +14,7 @@ public class SortTester {
 		System.out.printf("Shuffled%n%s%n",Arrays.toString(a));
 
 		TreeSort.sort(tree, a);
-		//TreeSort.sort(a);
+		TreeSort.sort(a);
 		System.out.printf("Sorted%n%s%n",Arrays.toString(a));
 	}
 }

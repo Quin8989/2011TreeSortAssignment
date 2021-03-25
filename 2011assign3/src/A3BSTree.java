@@ -1,7 +1,10 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 
@@ -43,14 +46,15 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 
 	@Override
 	public boolean addAll(Collection<? extends E> c) {
-		// TODO Auto-generated method stub
-		return false;
+		 boolean modified = false;
+		    for (E e : c) if (add(e)) modified = true; 
+		    return modified;
 	}
 
 	@Override
 	public boolean remove(Object o) {
 		if (o == null)
-			throw new IllegalArgumentException("calls delete() with a null key");
+			throw new IllegalArgumentException();
 		root = delete(root, o);
 		return true;
 	}
@@ -190,32 +194,40 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 	/* for testing DELETE BEFORE SUBMITTING */
 	public static void main(String[] args) {
 		Tree<Integer> tree = new A3BSTree<>();
-
-		tree.add(3);
-		tree.add(2);
-		tree.add(10);
-		tree.add(13);
-		tree.add(206);
-		tree.add(12);
-		tree.add(11);
-		tree.add(1000);
-		tree.add(1001);
-		tree.add(205);
-
-		// tree.remove(3);
-		tree.remove(2);
-
+		
+		ArrayList<Integer> dan = new ArrayList<Integer>();
+		dan.add(3);
+		dan.add(2);
+		dan.add(10);
+		dan.add(13);
+		dan.add(206);
+		dan.add(12);
+		dan.add(11);
+		dan.add(1000);
+		dan.add(1001);
+		dan.add(205);
+		
+		
+		Set<Integer> set = new HashSet<Integer>();
+			set.add(1);
+		    set.add(698);
+		    set.add(0);
+		
+		
+		tree.addAll(set);
+		
 		Iterator<Integer> iterator = tree.iterator();
 		while (iterator.hasNext()) {
 			Integer item = iterator.next();
 			System.out.println(item);
 		}
-
+		
 		System.out.println(tree.size());
 		System.out.println(" ");
 		System.out.println(tree.contains(13));
 		System.out.println(tree.height());
-
+		System.out.println(" ");
+		
 	}
 
 }

@@ -5,19 +5,18 @@ import java.util.NoSuchElementException;
 
 public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 
-	private Node root; // root of BST
+	private Node root;
 
 	private class Node {
 		private E item;
-		private Node left, right, parent; // left and right subtrees
-		private int size = 0; // number of nodes in subtree
+		private Node left, right, parent;
+		private int size = 0;
 
 		public Node(E item, int size) {
 			this.item = item;
 			this.size = size;
 		}
 	}
-
 
 	@Override
 	public boolean add(E item) {
@@ -32,11 +31,11 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 		int cmp = item.compareTo(x.item);
 		if (cmp < 0) {
 			x.left = add(x.left, item);
-			x.left.parent = x;}
-		else if (cmp > 0) {
+			x.left.parent = x;
+		} else if (cmp > 0) {
 			x.right = add(x.right, item);
-			x.right.parent = x;}
-		else
+			x.right.parent = x;
+		} else
 			x.item = item;
 		x.size = 1 + size(x.left) + size(x.right);
 		return x;
@@ -47,58 +46,62 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
 
 	@Override
 	public boolean remove(Object o) {
-		if (o == null) throw new IllegalArgumentException("calls delete() with a null key");
-        root = delete(root, o);
+		if (o == null)
+			throw new IllegalArgumentException("calls delete() with a null key");
+		root = delete(root, o);
 		return true;
-    }
+	}
 
-    private Node delete(Node x, Object o) {
-        if (x == null) return null;
+	private Node delete(Node x, Object o) {
+		if (x == null)
+			return null;
 
-        int cmp = ((Comparable<? super E>) o).compareTo(x.item);
-        if      (cmp < 0) x.left  = delete(x.left,  o);
-        else if (cmp > 0) x.right = delete(x.right, o);
-        else { 
-            if (x.right == null) return x.left;
-            if (x.left  == null) return x.right;
-            Node temp = x;
-            while(temp.left != null) {
-            	temp = temp.left;
-            }
-            x.item=temp.item;
-          
-            temp = null;
-            x.left = null;
-        } 
-        x.size = size(x.left) + size(x.right) + 1;
-        return x;
-    } 
-	    /**
-	     * Returns true if this symbol table is empty.
-	     * @return {@code true} if this symbol table is empty; {@code false} otherwise
-	     */
-	    public boolean isEmpty() {
-	        return size() == 0;
-	    }
-	
+		int cmp = ((Comparable<? super E>) o).compareTo(x.item);
+		if (cmp < 0)
+			x.left = delete(x.left, o);
+		else if (cmp > 0)
+			x.right = delete(x.right, o);
+		else {
+			if (x.right == null)
+				return x.left;
+			if (x.left == null)
+				return x.right;
+			Node temp = x;
+			while (temp.left != null) {
+				temp = temp.left;
+			}
+			x.item = temp.item;
+
+			temp = null;
+			x.left = null;
+		}
+		x.size = size(x.left) + size(x.right) + 1;
+		return x;
+	}
+
+	public boolean isEmpty() {
+		return size() == 0;
+	}
 
 	@Override
 	public boolean contains(Object o) {
-		Node x= root;
+		Node x = root;
 		int cmp;
-		while(true) {
-			if(x == null) return false;
+		while (true) {
+			if (x == null)
+				return false;
 			cmp = ((Comparable<? super E>) o).compareTo(x.item);
-			if (cmp < 0) x = x.left;
-			else if (cmp > 0) x = x.right;
-			else return true;
+			if (cmp < 0)
+				x = x.left;
+			else if (cmp > 0)
+				x = x.right;
+			else
+				return true;
 		}
-		
-		
+
 	}
 
 	@Override
@@ -130,8 +133,6 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 
 			Node r = next;
 
-			// If you can walk right, walk right, then fully left.
-			// otherwise, walk up until you come from left.
 			if (next.right != null) {
 				next = next.right;
 				while (next.left != null)
@@ -142,11 +143,9 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 			while (true) {
 				if (next.parent == null) {
 					next = null;
-//					System.out.println("hi");
 					return r.item;
 				}
 				if (next.parent.left == next) {
-//					System.out.println("hui");
 					next = next.parent;
 					return r.item;
 				}
@@ -158,8 +157,22 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 
 	@Override
 	public int height() {
-		// TODO Auto-generated method stub
-		return 0;
+		return height(root);
+	}
+
+	int height(Node node) {
+		if (node == null)
+			return 0;
+		else {
+			int lDepth = height(node.left);
+			int rDepth = height(node.right);
+
+			if (lDepth > rDepth)
+				return (lDepth + 1);
+			else
+				return (rDepth + 1);
+		}
+
 	}
 
 	@Override
@@ -188,20 +201,20 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 		tree.add(1000);
 		tree.add(1001);
 		tree.add(205);
-		
-		tree.remove(206);
-		
+
+		// tree.remove(3);
+		tree.remove(2);
 
 		Iterator<Integer> iterator = tree.iterator();
 		while (iterator.hasNext()) {
 			Integer item = iterator.next();
 			System.out.println(item);
 		}
-		
+
 		System.out.println(tree.size());
 		System.out.println(" ");
 		System.out.println(tree.contains(13));
-		
+		System.out.println(tree.height());
 
 	}
 

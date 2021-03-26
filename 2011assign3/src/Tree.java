@@ -52,4 +52,7 @@ public interface Tree <E> {
 	 */
 	public int size();
 
+
+
+
 }

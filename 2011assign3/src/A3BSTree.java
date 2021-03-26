@@ -20,6 +20,11 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 			this.size = size;
 		}
 	}
+	
+	
+	public A3BSTree(){
+		// TODO Auto-generated method stub
+	}
 
 	@Override
 	public boolean add(E item) {

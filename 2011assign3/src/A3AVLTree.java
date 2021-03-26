@@ -163,6 +163,11 @@ public class A3AVLTree <E> implements Tree<E> { //consider extending A3BSTree
 
 		}
 	}
+	
+	private int balance(Node node){
+		int result = height(node.right)- height(node.left);
+		return result;
+	}
 
 	@Override
 	public int height() {
@@ -228,10 +233,8 @@ public class A3AVLTree <E> implements Tree<E> { //consider extending A3BSTree
 		}
 		
 		System.out.println(tree.size());
-		System.out.println(" ");
-		System.out.println(tree.contains(13));
-		System.out.println(tree.height());
-		System.out.println(" ");
+
+	
 		
 	}
 

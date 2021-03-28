@@ -16,7 +16,12 @@ public class A3AVLTree<E> implements Tree<E> {
 
 	public A3AVLTree() {
 	}
-
+	
+	/**
+	 * Adds the specified element to this tree (duplicates are not allowed)
+	 * @param e element to add
+	 * @return true if the element was added (the tree was modified) 
+	 */
 	@Override
 	public boolean add(E item) {
 		root = add(root, item);
@@ -106,7 +111,13 @@ public class A3AVLTree<E> implements Tree<E> {
 		}
 		return b;
 	}
-
+	
+	/**
+	 * Adds all of the elements in the specified collection to this tree.
+	 * (duplicates are not allowed)
+	 * @param c Collection containing the elements
+	 * @return true if the tree was changed as a result of the call
+	 */
 	@Override
 	public boolean addAll(Collection<? extends E> c) {
 		for (E e : c) {
@@ -114,7 +125,12 @@ public class A3AVLTree<E> implements Tree<E> {
 		}
 		return true;
 	}
-
+	
+	/**
+	 * Removes the specified element from this tree, if it is present. 
+	 * @param o object to remove
+	 * @return true if this tree contained the element 
+	 */
 	@Override
 	public boolean remove(Object o) {
 		if (o == null)
@@ -150,11 +166,19 @@ public class A3AVLTree<E> implements Tree<E> {
 		}
 		return balance(x);
 	}
-
+	
+	/* Returns if tree is empty
+	 * @return true if empty
+	 */
 	public boolean isEmpty() {
 		return size() == 0;
 	}
 
+	/**
+	 * Returns true if this tree contains the specified element. 
+	 * @param o
+	 * @return true if contains object
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean contains(Object o) {
@@ -173,7 +197,10 @@ public class A3AVLTree<E> implements Tree<E> {
 		}
 
 	}
-
+	
+	/** Returns an iterator over the elements of this tree in ascending order
+	 * @return the iterator described above
+	 */
 	@Override
 	public Iterator<E> iterator() {
 		return new TreeIterator();
@@ -192,12 +219,14 @@ public class A3AVLTree<E> implements Tree<E> {
 				next = next.left;
 
 		}
-
+		
+		
 		@Override
 		public boolean hasNext() {
 			return next != null;
 		}
-
+		
+		
 		@Override
 		public E next() {
 
@@ -225,6 +254,11 @@ public class A3AVLTree<E> implements Tree<E> {
 		}
 	}
 
+	/** Returns the height of the tree. 
+	 * For an empty tree should return -1. 
+	 * For a tree of one node should return 0
+	 * @return height of the tree
+	 */
 	@Override
 	public int height() {
 		return height(root);
@@ -244,7 +278,10 @@ public class A3AVLTree<E> implements Tree<E> {
 		}
 
 	}
-
+	
+	/** Returns the number of elements in the tree. 
+	 * @return number of elements
+	 */
 	@Override
 	public int size() {
 		return size;

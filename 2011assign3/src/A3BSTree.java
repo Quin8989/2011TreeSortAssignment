@@ -1,6 +1,7 @@
 import java.util.Collection;
 import java.util.Iterator;
 
+
 public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 
 	private Node root;
@@ -19,12 +20,18 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 	public A3BSTree() {
 	}
 
+	/**
+	 * Adds the specified element to this tree (duplicates are not allowed)
+	 * @param x element to add
+	 * @return true if the element was added (the tree was modified) 
+	 */
 	@Override
 	public boolean add(E item) {
 		root = add(root, item);
 		return true;
 	}
 
+	
 	private Node add(Node x, E item) {
 		if (x == null) {
 			return new Node(item, 1);
@@ -42,6 +49,13 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 		return x;
 	}
 
+
+	/**
+	 * Adds all of the elements in the specified collection to this tree.
+	 * (duplicates are not allowed)
+	 * @param c Collection containing the elements
+	 * @return true if the tree was changed as a result of the call
+	 */
 	@Override
 	public boolean addAll(Collection<? extends E> c) {
 		boolean modified = false;
@@ -51,6 +65,11 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 		return modified;
 	}
 
+	/**
+	 * Removes the specified element from this tree, if it is present. 
+	 * @param o object to remove
+	 * @return true if this tree contained the element 
+	 */
 	@Override
 	public boolean remove(Object o) {
 		if (o == null)
@@ -86,11 +105,17 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 		x.size = size(x.left) + size(x.right) + 1;
 		return x;
 	}
-
-	public boolean isEmpty() {
+	
+	
+	private boolean isEmpty() {
 		return size() == 0;
 	}
 
+	/**
+	 * Returns true if this tree contains the specified element. 
+	 * @param o is the object
+	 * @return true if contains object
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean contains(Object o) {
@@ -109,7 +134,10 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 		}
 
 	}
-
+	
+	/** Returns an iterator over the elements of this tree in ascending order
+	 * @return the iterator described above
+	 */
 	@Override
 	public Iterator<E> iterator() {
 		return new TreeIterator();
@@ -128,12 +156,16 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 				next = next.left;
 
 		}
-
+		
+		/* returns if there is a next node
+		 * @return true if there is a next node
+		 */
 		@Override
 		public boolean hasNext() {
 			return next != null;
 		}
-
+		
+		
 		@Override
 		public E next() {
 
@@ -161,7 +193,12 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 
 		}
 	}
-
+	
+	/** Returns the height of the tree. 
+	 * For an empty tree should return -1. 
+	 * For a tree of one node should return 0
+	 * @return height of the tree
+	 */
 	@Override
 	public int height() {
 		return height(root);
@@ -182,11 +219,17 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 
 	}
 
+	/** Returns the size of the tree. 
+	 * @return  size
+	 */
 	@Override
 	public int size() {
 		return size(root);
 	}
-
+	
+	/** Returns the number of elements in the tree. 
+	 * @return number of elements
+	 */
 	private int size(Node x) {
 		if (x == null)
 			return 0;

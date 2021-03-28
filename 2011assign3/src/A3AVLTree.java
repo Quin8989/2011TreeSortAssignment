@@ -249,7 +249,7 @@ public class A3AVLTree<E> implements Tree<E> {
 	public int size() {
 		return size;
 	}
-}
+} 
 /******************************************************************************
  * Methods add(), remove(), balance() balanceFactor() referenced from the
  * respective methods from:

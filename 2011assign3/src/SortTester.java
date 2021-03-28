@@ -17,4 +17,4 @@ public class SortTester {
 		TreeSort.sort(a);
 		System.out.printf("Sorted%n%s%n",Arrays.toString(a));
 	}
-}
+} 

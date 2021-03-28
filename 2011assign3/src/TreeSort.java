@@ -1,3 +1,5 @@
+import java.util.Iterator;
+
 public class TreeSort{
 	/** Sorts an array using TreeSort with a balanced BST implementation 
 	 * @param a an array to sort
@@ -13,6 +15,15 @@ public class TreeSort{
 	 * @param a an array to sort
 	 */
 	public static <E extends Comparable <? super E>> void sort(Tree <E> tree, E[] a){
-		// TODO Auto-generated method stub
+		Iterator<E> iterator;
+        for (int i = 0; i < a.length; i++) {
+            tree.add(a[i]);
+        }
+        iterator = tree.iterator();
+        int i = 0;
+        while (iterator.hasNext()) {
+            a[i] = iterator.next();
+            i++;
+        }
 	}
 }

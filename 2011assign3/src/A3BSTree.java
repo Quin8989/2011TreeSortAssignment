@@ -206,11 +206,11 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 		dan.add(10);
 		dan.add(13);
 		dan.add(206);
-		dan.add(12);
-		dan.add(11);
-		dan.add(1000);
-		dan.add(1001);
-		dan.add(205);
+	//	dan.add(12);
+	//	dan.add(11);
+	//	dan.add(1000);
+	//	dan.add(1001);
+	//	dan.add(205);
 		
 		
 		Set<Integer> set = new HashSet<Integer>();
@@ -219,19 +219,22 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 		    set.add(0);
 		
 		
-		tree.addAll(set);
-		
+		tree.addAll(dan);
+			/*tree.add(3);
+			tree.add(2);
+			tree.add(10);
+			tree.add(13);
+			tree.add(206);*/
 		Iterator<Integer> iterator = tree.iterator();
 		while (iterator.hasNext()) {
 			Integer item = iterator.next();
 			System.out.println(item);
 		}
 		
-		System.out.println(tree.size());
-		System.out.println(" ");
-		System.out.println(tree.contains(13));
-		System.out.println(tree.height());
-		System.out.println(" ");
+		System.out.println("size: "+tree.size());
+		//System.out.println(tree.contains(13));
+		System.out.println("height: "+tree.height());
+		//System.out.println(" ");
 		
 	}
 

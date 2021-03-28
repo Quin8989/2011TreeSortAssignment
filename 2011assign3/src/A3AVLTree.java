@@ -4,20 +4,19 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import A3BSTree.Node;
-import A3BSTree.TreeIterator;
 
 public class A3AVLTree<E> implements Tree<E> { // consider extending A3BSTree
 	private Node root;
-
+	private int size = 0;
+	
 	private class Node {
 		private E item;
 		private Node left, right, parent;
-		private int size = 0;
+		
 
-		public Node(E item, int size) {
+
+		public Node(E item) {
 			this.item = item;
-			this.size = size;
 		}
 	}
 
@@ -28,12 +27,13 @@ public class A3AVLTree<E> implements Tree<E> { // consider extending A3BSTree
 	@Override
 	public boolean add(E item) {
 		root = add(root, item);
+		size++;
 		return true;
 	}
 
 	private Node add(Node x, E item) {
 		if (x == null) {
-			return new Node(item, 1);
+			return new Node(item);
 		}
 		int cmp = ((Comparable<? super E>) item).compareTo(x.item);
 		if (cmp < 0) {
@@ -44,9 +44,82 @@ public class A3AVLTree<E> implements Tree<E> { // consider extending A3BSTree
 			x.right.parent = x;
 		} else
 			x.item = item;
-		x.size = 1 + size(x.left) + size(x.right);
-		return x;
+//		x.size = 1 + size(x.left) + size(x.right);
+		
+		return balance(x);
 	}
+	
+	/* ROTATIONS AND STUFF*/
+	 private Node balance(Node x) {
+	        if (balanceFactor(x) < -1) {
+	            if (balanceFactor(x.right) > 0) {
+	                x.right = rotateRight(x.right);
+	            }
+	            x = rotateLeft(x);
+	        }
+	        else if (balanceFactor(x) > 1) {
+	            if (balanceFactor(x.left) < 0) {
+	                x.left = rotateLeft(x.left);
+	            }
+	            x = rotateRight(x);
+	        }
+	        return x;
+	    }
+	 
+	 private int balanceFactor(Node x) {
+	        return height(x.left) - height(x.right);
+	    }
+	 
+	 private Node rotateRight(Node a) {
+		 
+	        Node b = a.left;
+	        b.parent = a.parent;
+	 
+	        a.left = b.right;
+	 
+	        if (a.left != null)
+	            a.left.parent = a;
+	 
+	        b.right = a;
+	        a.parent = b;
+	 
+	        if (b.parent != null) {
+	            if (b.parent.right == a) {
+	                b.parent.right = b;
+	            } else {
+	                b.parent.left = b;
+	            }
+	        }
+	 
+	        return b;
+	    }
+	 
+	 private Node rotateLeft(Node a) {
+		 
+	        Node b = a.right;
+	        b.parent = a.parent;
+	 
+	        a.right = b.left;
+	 
+	        if (a.right != null)
+	            a.right.parent = a;
+	 
+	        b.left = a;
+	        a.parent = b;
+	 
+	        if (b.parent != null) {
+	            if (b.parent.right == a) {
+	                b.parent.right = b;
+	            } else {
+	                b.parent.left = b;
+	            }
+	        }
+
+	        return b;
+	    }
+	
+	
+	
 
 	@Override
 	public boolean addAll(Collection<? extends E> c) {
@@ -60,6 +133,7 @@ public class A3AVLTree<E> implements Tree<E> { // consider extending A3BSTree
 		if (o == null)
 			throw new IllegalArgumentException();
 		root = delete(root, o);
+		size--;
 		return true;
 	}
 
@@ -86,8 +160,8 @@ public class A3AVLTree<E> implements Tree<E> { // consider extending A3BSTree
 			temp = null;
 			x.left = null;
 		}
-		x.size = size(x.left) + size(x.right) + 1;
-		return x;
+//		x.size = size(x.left) + size(x.right) + 1;
+		return balance(x);
 	}
 
 	public boolean isEmpty() {
@@ -186,37 +260,31 @@ public class A3AVLTree<E> implements Tree<E> { // consider extending A3BSTree
 
 	@Override
 	public int size() {
-		return size(root);
-	}
+		return size;
+		}
 	
-	private int size(Node x) {
-		if (x == null)
-			return 0;
-		else
-			return x.size;
-	}
+
 
 	/* for testing DELETE BEFORE SUBMITTING */
 	public static void main(String[] args) {
 		Tree<Integer> tree = new A3AVLTree<>();
 
 		ArrayList<Integer> dan = new ArrayList<Integer>();
-		dan.add(1);
+		dan.add(13);
+		dan.add(206);
 		dan.add(2);
-		dan.add(3);
+		dan.add(10);
+		dan.add(1000);
+		
+		
 
 
 
 
-		Set<Integer> set = new HashSet<Integer>();
-		set.add(15);
-		set.add(16);
-		set.add(14);
-		set.add(13);
-//		set.add(12);
-//		set.add(11);
 
 		tree.addAll(dan);
+		
+		//tree.remove(2);
 
 //		tree.add(15);
 //		tree.add(16);
@@ -233,10 +301,11 @@ public class A3AVLTree<E> implements Tree<E> { // consider extending A3BSTree
 			Integer item = iterator.next();
 			System.out.println("Output: " + item);
 	}
-//		System.out.println("size: " + tree.size());
-//		System.out.println("height: " + tree.height());
+		System.out.println("size: " + tree.size());
+		System.out.println("height: " + tree.height());
 //		System.out.println(tree.item);
 
-	}
-
-}
+		
+		
+		
+}}

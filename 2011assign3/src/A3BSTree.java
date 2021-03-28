@@ -69,8 +69,8 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 			return null;
 
 		int cmp = ((Comparable<? super E>) o).compareTo(x.item);
-		if (cmp < 0)
-			x.left = delete(x.left, o);
+		if (cmp < 0) {
+			x.left = delete(x.left, o);}
 		else if (cmp > 0)
 			x.right = delete(x.right, o);
 		else {
@@ -150,8 +150,12 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 			}
 
 			while (true) {
+				
 				if (next.parent == null) {
+				//	System.out.println(next.item);
 					next = null;
+					
+					
 					return r.item;
 				}
 				if (next.parent.left == next) {
@@ -201,16 +205,11 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 		Tree<Integer> tree = new A3BSTree<>();
 		
 		ArrayList<Integer> dan = new ArrayList<Integer>();
-		dan.add(3);
-		dan.add(2);
-		dan.add(10);
 		dan.add(13);
 		dan.add(206);
-	//	dan.add(12);
-	//	dan.add(11);
-	//	dan.add(1000);
-	//	dan.add(1001);
-	//	dan.add(205);
+		dan.add(2);
+		dan.add(10);
+		dan.add(1000);
 		
 		
 		Set<Integer> set = new HashSet<Integer>();
@@ -239,3 +238,4 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 	}
 
 }
+

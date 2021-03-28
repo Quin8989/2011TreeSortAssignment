@@ -1,27 +1,20 @@
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 
-
-public class A3AVLTree<E> implements Tree<E> { // consider extending A3BSTree
+public class A3AVLTree<E> implements Tree<E> {
 	private Node root;
 	private int size = 0;
-	
+
 	private class Node {
 		private E item;
 		private Node left, right, parent;
-		
 
-
-		public Node(E item) {
+		private Node(E item) {
 			this.item = item;
 		}
 	}
 
 	public A3AVLTree() {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
@@ -35,6 +28,7 @@ public class A3AVLTree<E> implements Tree<E> { // consider extending A3BSTree
 		if (x == null) {
 			return new Node(item);
 		}
+		@SuppressWarnings("unchecked")
 		int cmp = ((Comparable<? super E>) item).compareTo(x.item);
 		if (cmp < 0) {
 			x.left = add(x.left, item);
@@ -44,82 +38,74 @@ public class A3AVLTree<E> implements Tree<E> { // consider extending A3BSTree
 			x.right.parent = x;
 		} else
 			x.item = item;
-//		x.size = 1 + size(x.left) + size(x.right);
-		
 		return balance(x);
 	}
-	
-	/* ROTATIONS AND STUFF*/
-	 private Node balance(Node x) {
-	        if (balanceFactor(x) < -1) {
-	            if (balanceFactor(x.right) > 0) {
-	                x.right = rotateRight(x.right);
-	            }
-	            x = rotateLeft(x);
-	        }
-	        else if (balanceFactor(x) > 1) {
-	            if (balanceFactor(x.left) < 0) {
-	                x.left = rotateLeft(x.left);
-	            }
-	            x = rotateRight(x);
-	        }
-	        return x;
-	    }
-	 
-	 private int balanceFactor(Node x) {
-	        return height(x.left) - height(x.right);
-	    }
-	 
-	 private Node rotateRight(Node a) {
-		 
-	        Node b = a.left;
-	        b.parent = a.parent;
-	 
-	        a.left = b.right;
-	 
-	        if (a.left != null)
-	            a.left.parent = a;
-	 
-	        b.right = a;
-	        a.parent = b;
-	 
-	        if (b.parent != null) {
-	            if (b.parent.right == a) {
-	                b.parent.right = b;
-	            } else {
-	                b.parent.left = b;
-	            }
-	        }
-	 
-	        return b;
-	    }
-	 
-	 private Node rotateLeft(Node a) {
-		 
-	        Node b = a.right;
-	        b.parent = a.parent;
-	 
-	        a.right = b.left;
-	 
-	        if (a.right != null)
-	            a.right.parent = a;
-	 
-	        b.left = a;
-	        a.parent = b;
-	 
-	        if (b.parent != null) {
-	            if (b.parent.right == a) {
-	                b.parent.right = b;
-	            } else {
-	                b.parent.left = b;
-	            }
-	        }
 
-	        return b;
-	    }
-	
-	
-	
+	private Node balance(Node x) {
+		if (balanceFactor(x) < -1) {
+			if (balanceFactor(x.right) > 0) {
+				x.right = rotateRight(x.right);
+			}
+			x = rotateLeft(x);
+		} else if (balanceFactor(x) > 1) {
+			if (balanceFactor(x.left) < 0) {
+				x.left = rotateLeft(x.left);
+			}
+			x = rotateRight(x);
+		}
+		return x;
+	}
+
+	private int balanceFactor(Node x) {
+		return height(x.left) - height(x.right);
+	}
+
+	private Node rotateRight(Node a) {
+
+		Node b = a.left;
+		b.parent = a.parent;
+
+		a.left = b.right;
+
+		if (a.left != null)
+			a.left.parent = a;
+
+		b.right = a;
+		a.parent = b;
+
+		if (b.parent != null) {
+			if (b.parent.right == a) {
+				b.parent.right = b;
+			} else {
+				b.parent.left = b;
+			}
+		}
+
+		return b;
+	}
+
+	private Node rotateLeft(Node a) {
+
+		Node b = a.right;
+		b.parent = a.parent;
+
+		a.right = b.left;
+
+		if (a.right != null)
+			a.right.parent = a;
+
+		b.left = a;
+		a.parent = b;
+
+		if (b.parent != null) {
+			if (b.parent.right == a) {
+				b.parent.right = b;
+			} else {
+				b.parent.left = b;
+			}
+		}
+		return b;
+	}
 
 	@Override
 	public boolean addAll(Collection<? extends E> c) {
@@ -128,6 +114,7 @@ public class A3AVLTree<E> implements Tree<E> { // consider extending A3BSTree
 		}
 		return true;
 	}
+
 	@Override
 	public boolean remove(Object o) {
 		if (o == null)
@@ -141,6 +128,7 @@ public class A3AVLTree<E> implements Tree<E> { // consider extending A3BSTree
 		if (x == null)
 			return null;
 
+		@SuppressWarnings("unchecked")
 		int cmp = ((Comparable<? super E>) o).compareTo(x.item);
 		if (cmp < 0)
 			x.left = delete(x.left, o);
@@ -160,7 +148,6 @@ public class A3AVLTree<E> implements Tree<E> { // consider extending A3BSTree
 			temp = null;
 			x.left = null;
 		}
-//		x.size = size(x.left) + size(x.right) + 1;
 		return balance(x);
 	}
 
@@ -168,6 +155,7 @@ public class A3AVLTree<E> implements Tree<E> { // consider extending A3BSTree
 		return size() == 0;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean contains(Object o) {
 		Node x = root;
@@ -185,7 +173,6 @@ public class A3AVLTree<E> implements Tree<E> { // consider extending A3BSTree
 		}
 
 	}
-
 
 	@Override
 	public Iterator<E> iterator() {
@@ -261,51 +248,11 @@ public class A3AVLTree<E> implements Tree<E> { // consider extending A3BSTree
 	@Override
 	public int size() {
 		return size;
-		}
-	
-
-
-	/* for testing DELETE BEFORE SUBMITTING */
-	public static void main(String[] args) {
-		Tree<Integer> tree = new A3AVLTree<>();
-
-		ArrayList<Integer> dan = new ArrayList<Integer>();
-		dan.add(13);
-		dan.add(206);
-		dan.add(2);
-		dan.add(10);
-		dan.add(1000);
-		
-		
-
-
-
-
-
-		tree.addAll(dan);
-		
-		//tree.remove(2);
-
-//		tree.add(15);
-//		tree.add(16);
-//		tree.add(14);
-//		tree.add(13);
-//		tree.add(12);
-//		tree.add(11);
-		System.out.println(" ");
-		System.out.println(" ");
-		System.out.println(" ");
-
-	Iterator<Integer> iterator = tree.iterator();
-		while (iterator.hasNext()) {
-			Integer item = iterator.next();
-			System.out.println("Output: " + item);
 	}
-		System.out.println("size: " + tree.size());
-		System.out.println("height: " + tree.height());
-//		System.out.println(tree.item);
-
-		
-		
-		
-}}
+}
+/******************************************************************************
+ * Methods add(), remove(), balance() balanceFactor() referenced from the
+ * respective methods from:
+ * https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/AVLTreeST.java by
+ * Robert Sedgewick and Kevin Wayne
+ ******************************************************************************/

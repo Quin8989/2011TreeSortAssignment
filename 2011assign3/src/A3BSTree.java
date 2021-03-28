@@ -1,10 +1,5 @@
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.Set;
 
 public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 
@@ -15,15 +10,13 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 		private Node left, right, parent;
 		private int size = 0;
 
-		public Node(E item, int size) {
+		private Node(E item, int size) {
 			this.item = item;
 			this.size = size;
 		}
 	}
-	
-	
-	public A3BSTree(){
-		// TODO Auto-generated method stub
+
+	public A3BSTree() {
 	}
 
 	@Override
@@ -51,9 +44,11 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 
 	@Override
 	public boolean addAll(Collection<? extends E> c) {
-		 boolean modified = false;
-		    for (E e : c) if (add(e)) modified = true; 
-		    return modified;
+		boolean modified = false;
+		for (E e : c)
+			if (add(e))
+				modified = true;
+		return modified;
 	}
 
 	@Override
@@ -68,10 +63,11 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 		if (x == null)
 			return null;
 
+		@SuppressWarnings("unchecked")
 		int cmp = ((Comparable<? super E>) o).compareTo(x.item);
 		if (cmp < 0) {
-			x.left = delete(x.left, o);}
-		else if (cmp > 0)
+			x.left = delete(x.left, o);
+		} else if (cmp > 0)
 			x.right = delete(x.right, o);
 		else {
 			if (x.right == null)
@@ -95,6 +91,7 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 		return size() == 0;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean contains(Object o) {
 		Node x = root;
@@ -150,12 +147,9 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 			}
 
 			while (true) {
-				
+
 				if (next.parent == null) {
-				//	System.out.println(next.item);
 					next = null;
-					
-					
 					return r.item;
 				}
 				if (next.parent.left == next) {
@@ -200,42 +194,11 @@ public class A3BSTree<E extends Comparable<? super E>> implements Tree<E> {
 			return x.size;
 	}
 
-	/* for testing DELETE BEFORE SUBMITTING */
-	public static void main(String[] args) {
-		Tree<Integer> tree = new A3BSTree<>();
-		
-		ArrayList<Integer> dan = new ArrayList<Integer>();
-		dan.add(13);
-		dan.add(206);
-		dan.add(2);
-		dan.add(10);
-		dan.add(1000);
-		
-		
-		Set<Integer> set = new HashSet<Integer>();
-			set.add(1);
-		    set.add(698);
-		    set.add(0);
-		
-		
-		tree.addAll(dan);
-			/*tree.add(3);
-			tree.add(2);
-			tree.add(10);
-			tree.add(13);
-			tree.add(206);*/
-		Iterator<Integer> iterator = tree.iterator();
-		while (iterator.hasNext()) {
-			Integer item = iterator.next();
-			System.out.println(item);
-		}
-		
-		System.out.println("size: "+tree.size());
-		//System.out.println(tree.contains(13));
-		System.out.println("height: "+tree.height());
-		//System.out.println(" ");
-		
-	}
-
 }
 
+/******************************************************************************
+ * Methods add(), remove(), balance() balanceFactor() referenced from the
+ * respective methods from:
+ * https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/AVLTreeST.java by
+ * Robert Sedgewick and Kevin Wayne
+ ******************************************************************************/

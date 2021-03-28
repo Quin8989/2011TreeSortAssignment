@@ -4,7 +4,7 @@ import java.util.Collections;
 public class SortTester {
 
 	public static void main(String[] args) {
-		Tree <Integer> tree = new A3BSTree<>();
+		Tree <Integer> tree = new A3AVLTree<>();
 		Integer a [] = new Integer[10];
 
 		for (int i = 0; i < a.length; i++) a[i] = i;
